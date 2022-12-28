@@ -7,21 +7,27 @@ import Inscription from './pages/Inscription';
 import ListeEtudiant from './pages/ListeEtudiant';
 import Login from './pages/Login';
 import Reinscription from './pages/Reinscription';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import EtudiantDetail from './pages/EtudiantDetail';
 import ListeUtilisateur from './pages/ListeUtilisateur';
 import AjoutUtilisateur from './pages/AjoutUtilisateur';
 import ModificationUtilisateur from './pages/ModificationUtilisateur';
+import { useAuthContext } from './hooks/useAuthContext';
+import NavbarScolarite from './components/NavbarScolarite';
 
 const App = () => {
+  const { admin, direction, scolarite } = useAuthContext();
   return (
     <BrowserRouter>
-      <NavbarDirection />
-      {/* <NavbarAdmin /> */}
-      {/* <Login /> */}
-
+      {direction && <NavbarDirection />}
+      {scolarite && <NavbarScolarite />}
+      {admin && <NavbarAdmin />}
       <Routes>
         <Route path="/" element={<Accueil />} />
+        <Route
+          path="/login"
+          element={!direction && !scolarite && !admin && <Login />}
+        />
         <Route path="/inscription" element={<Inscription />} />
         <Route path="/reinscription" element={<Reinscription />} />
         <Route path="/ajout" element={<AjoutEtudiant />} />

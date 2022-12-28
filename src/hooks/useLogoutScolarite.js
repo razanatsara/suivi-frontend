@@ -1,15 +1,15 @@
 import { useAuthContext } from './useAuthContext';
 import { useNavigate } from 'react-router-dom';
-export const useLogoutDirection = () => {
+export const useLogoutScolarite = () => {
   const { dispatch } = useAuthContext();
   const redirect = useNavigate();
-  const logoutDirection = () => {
+  const logoutScolarite = () => {
     // remove user from storage
-    localStorage.removeItem('direction');
+    localStorage.removeItem('scolarite');
     // dispatch logout action
-    dispatch({ type: 'LOGOUT_DIRECTION' });
+    dispatch({ type: 'LOGOUT_SCOLARITE' });
     redirect('/login');
   };
 
-  return { logoutDirection };
+  return { logoutScolarite };
 };

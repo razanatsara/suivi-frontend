@@ -1,27 +1,43 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Col, Button, Row, Container, Card, Form } from 'react-bootstrap';
 import axios from 'axios';
-import { useLoginAdmin } from '../hooks/useLoginAdmin';
-import { useLoginDirection } from '../hooks/useLoginDirection';
 
 const Login = () => {
-  const [type, setType] = useState();
+  const redirect = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const { loginAdmin, isLoadingAdmin, errorAdmin } = useLoginAdmin();
-  const { loginDirection, isLoadingDirection, errorDirection } =
-    useLoginDirection();
 
   const connexion = async (e) => {
     e.preventDefault();
-    console.log(type);
-    console.log(email);
-    console.log(password);
-    if (type === 'direction') {
-      await loginDirection(email, password);
-    } else if (type === 'admin') {
-      await loginAdmin(email, password);
-    }
+    await axios({
+      method: 'post',
+      url: `http://127.0.0.1:5000/api/user/login`,
+      data: {
+        email: email,
+        password: password,
+      },
+    })
+      .then((res) => {
+        if (res.data.utilisateur === 'Admin') {
+          localStorage.setItem('admin', JSON.stringify(res.data));
+          redirect('/listeuser');
+          window.location.reload(true);
+        }
+        if (res.data.utilisateur === 'Direction') {
+          localStorage.setItem('direction', JSON.stringify(res.data));
+          redirect('/liste');
+          window.location.reload(true);
+        }
+        if (res.data.utilisateur === 'Scolarite') {
+          localStorage.setItem('scolarite', JSON.stringify(res.data));
+          redirect('/');
+          window.location.reload(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div>

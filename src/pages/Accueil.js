@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
 import { Col, Button, Row, Container, Form, Table } from 'react-bootstrap';
 const Accueil = () => {
   const [globleSearch, setGlobalSearch] = useState(true);
   const [particularSearch, setParticularSearch] = useState(false);
+
+  const { admin, direction, scolarite } = useAuthContext();
 
   const handlingGlobal = () => {
     setGlobalSearch(true);
@@ -42,11 +45,21 @@ const Accueil = () => {
                 <Col lg={6}>
                   <Form.Select className="mb-3">
                     <option>Mention</option>
-                    <option value={'Mention1'}>GENIE DU BATIMENT ET INFRASTRUCTURE </option>
-                    <option value={'Mention2'}>GENIE D'AMENAGEMENT ET DU DEVELOPPEMENT TERRITORIAL</option>
-                    <option value={'Mention3'}>PRODUCTIQUE ET MAINTENANCE INDUSTRIELLE</option>
-                    <option value={'Mention4'}>GENIE ENERGETIQUE ET AUTOMATISME</option>
-                    <option value={'Mention5'}>BUSINESSTRADING ET FINANCES</option>
+                    <option value={'Mention1'}>
+                      GENIE DU BATIMENT ET INFRASTRUCTURE{' '}
+                    </option>
+                    <option value={'Mention2'}>
+                      GENIE D'AMENAGEMENT ET DU DEVELOPPEMENT TERRITORIAL
+                    </option>
+                    <option value={'Mention3'}>
+                      PRODUCTIQUE ET MAINTENANCE INDUSTRIELLE
+                    </option>
+                    <option value={'Mention4'}>
+                      GENIE ENERGETIQUE ET AUTOMATISME
+                    </option>
+                    <option value={'Mention5'}>
+                      BUSINESSTRADING ET FINANCES
+                    </option>
                     <option value={'Mention6'}>LOGISTIQUE ET TRANSPORT</option>
                     <option value={'Mention7'}>ENTREPREUNARIAT</option>
                   </Form.Select>

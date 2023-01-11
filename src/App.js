@@ -1,6 +1,5 @@
-import React from 'react';
-import NavbarAdmin from './components/NavbarAdmin';
-import NavbarDirection from './components/NavbarDirection';
+import React, { useContext } from 'react';
+import Navbare from './components/Navbare';
 import Accueil from './pages/Accueil';
 import AjoutEtudiant from './pages/AjoutEtudiant';
 import Inscription from './pages/Inscription';
@@ -12,22 +11,20 @@ import EtudiantDetail from './pages/EtudiantDetail';
 import ListeUtilisateur from './pages/ListeUtilisateur';
 import AjoutUtilisateur from './pages/AjoutUtilisateur';
 import ModificationUtilisateur from './pages/ModificationUtilisateur';
-import { useAuthContext } from './hooks/useAuthContext';
-import NavbarScolarite from './components/NavbarScolarite';
+import { AuthContext } from './context/AuthContext';
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 const App = () => {
-  const { admin, direction, scolarite } = useAuthContext();
+  const { direction, scolarite, admin } = useContext(AuthContext);
+
   return (
     <BrowserRouter>
-      {direction && <NavbarDirection />}
-      {scolarite && <NavbarScolarite />}
-      {admin && <NavbarAdmin />}
+      <Navbare />
       <Routes>
         <Route path="/" element={<Accueil />} />
-        <Route
-          path="/login"
-          element={!direction && !scolarite && !admin && <Login />}
-        />
+        <Route path="/login" element={<Login />} />
         <Route path="/inscription" element={<Inscription />} />
         <Route path="/reinscription" element={<Reinscription />} />
         <Route path="/ajout" element={<AjoutEtudiant />} />

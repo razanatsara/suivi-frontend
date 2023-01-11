@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Button, Row, Container, Form, Card } from 'react-bootstrap';
+import { Col, Button, Row, Container, Form } from 'react-bootstrap';
 const ModificationUtilisateur = () => {
   return (
     <Container>

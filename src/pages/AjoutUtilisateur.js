@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Col, Button, Row, Container, Form, Card } from 'react-bootstrap';
+import { Col, Button, Row, Container, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,6 +26,7 @@ const AjoutUtilisateur = () => {
             isScolarite: false,
             email: email,
             password: password,
+            passwordVerify: vpassword,
           },
         })
           .then((res) => {

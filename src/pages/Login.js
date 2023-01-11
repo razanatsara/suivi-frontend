@@ -1,43 +1,31 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
 import { Col, Button, Row, Container, Card, Form } from 'react-bootstrap';
 import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const redirect = useNavigate();
+  const { direction, scolarite, admin, fetchUser } = useContext(AuthContext);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
   const connexion = async (e) => {
     e.preventDefault();
-    await axios({
-      method: 'post',
-      url: `http://127.0.0.1:5000/api/user/login`,
-      data: {
-        email: email,
-        password: password,
-      },
-    })
-      .then((res) => {
-        if (res.data.utilisateur === 'Admin') {
-          localStorage.setItem('admin', JSON.stringify(res.data));
-          redirect('/listeuser');
-          window.location.reload(true);
-        }
-        if (res.data.utilisateur === 'Direction') {
-          localStorage.setItem('direction', JSON.stringify(res.data));
-          redirect('/liste');
-          window.location.reload(true);
-        }
-        if (res.data.utilisateur === 'Scolarite') {
-          localStorage.setItem('scolarite', JSON.stringify(res.data));
-          redirect('/');
-          window.location.reload(true);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
+    try {
+      const loginData = {
+        email,
+        password,
+      };
+      await axios.post(`http://localhost:5000/api/user/login`, loginData);
+      await fetchUser();
+      if (direction === true || scolarite === true || admin === true) {
+        redirect('/');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <div>

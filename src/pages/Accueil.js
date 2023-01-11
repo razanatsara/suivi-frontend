@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { useAuthContext } from '../hooks/useAuthContext';
 import { Col, Button, Row, Container, Form, Table } from 'react-bootstrap';
 const Accueil = () => {
   const [globleSearch, setGlobalSearch] = useState(true);
   const [particularSearch, setParticularSearch] = useState(false);
-
-  const { admin, direction, scolarite } = useAuthContext();
 
   const handlingGlobal = () => {
     setGlobalSearch(true);

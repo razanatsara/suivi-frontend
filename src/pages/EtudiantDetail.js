@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Col, Button, Row, Container, Form, Table } from 'react-bootstrap';
+import { AuthContext } from '../context/AuthContext';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 const EtudiantDetail = () => {
+  const { id } = useParams();
+  const [etudiant, setEtudiant] = useState();
+  const { direction, scolarite, admin } = useContext(AuthContext);
   const [dossierEntrant, setDossierEntrant] = useState(true);
   const [dossierSortant, setDossierSortant] = useState(false);
   const [ajoutDossierEntrant, setAjoutDossierEntrant] = useState(false);
@@ -30,7 +36,21 @@ const EtudiantDetail = () => {
     setAjoutDossierEntrant(false);
     setAjoutDossierSortant(true);
   };
-
+  useEffect(() => {
+    const getOneStudent = async () => {
+      await axios({
+        method: 'get',
+        url: `http://localhost:5000/api/etudiant/${id}`,
+      })
+        .then((res) => {
+          setEtudiant(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    getOneStudent();
+  }, []);
   return (
     <Container>
       <h2 className="mb-2 text-uppercase text-center text-primary mt-4">
@@ -38,27 +58,27 @@ const EtudiantDetail = () => {
       </h2>
       <Row className="justify-content-center align-items-center mb-3">
         <Col lg={4} className="align-items-center">
-          <b>Nom</b>: RAZANATSARA
+          <b>Nom</b>: {etudiant.nom}
         </Col>
       </Row>
       <Row className="justify-content-center align-items-center mb-3">
         <Col lg={4} className="align-items-center">
-          <b>Prenoms</b>: Andrea Sylvano
+          <b>Prenoms</b>: {etudiant.prenom}
         </Col>
       </Row>
       <Row className="justify-content-center align-items-center mb-3">
         <Col lg={4} className="align-items-center">
-          <b>Type de formation</b>: FC
+          <b>Type de formation</b>: {etudiant.typeFormation}
         </Col>
       </Row>
       <Row className="justify-content-center align-items-center mb-3">
         <Col lg={4} className="align-items-center">
-          <b>Parcours</b>: TIM
+          <b>Parcours</b>: {etudiant.parcours}
         </Col>
       </Row>
       <Row className="justify-content-center align-items-center mb-3">
         <Col lg={4} className="align-items-center">
-          <b>Annee</b>: 2014
+          <b>Annee</b>: {etudiant.anneEtude}
         </Col>
       </Row>
       <Row className="justify-content-center align-items-center mb-3">

@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
 import { Col, Button, Row, Container, Form, Table } from 'react-bootstrap';
 const Accueil = () => {
+  const { direction, scolarite, admin } = useContext(AuthContext);
   const [globleSearch, setGlobalSearch] = useState(true);
   const [particularSearch, setParticularSearch] = useState(false);
+  const [query, setQuery] = useState();
 
   const handlingGlobal = () => {
     setGlobalSearch(true);
@@ -12,6 +17,23 @@ const Accueil = () => {
     setGlobalSearch(false);
     setParticularSearch(true);
   };
+
+  const [etudiant, setEtudiant] = useState();
+  useEffect(() => {
+    const getAllStudent = async () => {
+      await axios({
+        method: 'get',
+        url: `http://localhost:5000/api/etudiant/`,
+      })
+        .then((res) => {
+          setEtudiant(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    getAllStudent();
+  }, []);
   return (
     <div>
       <Container>
@@ -23,7 +45,7 @@ const Accueil = () => {
           </Col>
           <Col lg={6}>
             <Button variant="primary" size="lg" onClick={handlingParticular}>
-              Recherche particulier
+              Recherche particulière
             </Button>
           </Col>
         </Row>
@@ -134,19 +156,19 @@ const Accueil = () => {
           {particularSearch && (
             <Form className="mt-3 align-items-center">
               <Row className="justify-content-center align-items-center">
-                <Col lg={2}></Col>
-                <Col lg={6}>
+                <Col
+                  lg={6}
+                  className="justify-content-center align-items-center"
+                >
                   <Form.Group controlId="formBasicEmail">
                     <Form.Control
                       type="text"
-                      placeholder="Entrer le nom complet"
+                      placeholder="Entrer le nom de l'étudiant"
+                      onChange={(event) => {
+                        setQuery(event.target.value);
+                      }}
                     />
                   </Form.Group>
-                </Col>
-                <Col lg={2}>
-                  <Button variant="primary" type="submit" size="lg">
-                    Rechercher
-                  </Button>
                 </Col>
               </Row>
             </Form>
@@ -165,16 +187,24 @@ const Accueil = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>RAZAFINDRADINA Henri Bruno</td>
-                <td>RT</td>
-                <td>2022</td>
-              </tr>
-              <tr>
-                <td>Maniry Christophe</td>
-                <td>TIM</td>
-                <td>2022</td>
-              </tr>
+              {etudiant && query !== ' '
+                ? etudiant
+                    .filter((val) => val.nom.toLowerCase().includes(query))
+                    .map((val) => {
+                      return (
+                        <tr key={val._id}>
+                          <td>
+                            <Link to={`/detailetudiant/${val._id}`}>
+                              {' '}
+                              {val.nom} {val.prenom}
+                            </Link>
+                          </td>
+                          <td>{val.parcours}</td>
+                          <td>{val.anneEtude}</td>
+                        </tr>
+                      );
+                    })
+                : ''}
             </tbody>
           </Table>
         </Row>

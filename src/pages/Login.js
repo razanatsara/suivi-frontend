@@ -9,10 +9,8 @@ const Login = () => {
   const { direction, scolarite, admin, fetchUser } = useContext(AuthContext);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-
   const connexion = async (e) => {
     e.preventDefault();
-
     try {
       const loginData = {
         email,
@@ -20,9 +18,6 @@ const Login = () => {
       };
       await axios.post(`http://localhost:5000/api/user/login`, loginData);
       await fetchUser();
-      if (direction === true || scolarite === true || admin === true) {
-        redirect('/');
-      }
     } catch (error) {
       console.error(error);
     }

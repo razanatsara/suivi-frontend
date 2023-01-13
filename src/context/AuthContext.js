@@ -14,9 +14,9 @@ const AuthContextProvider = (props) => {
     let directionUrl = 'http://localhost:5000/api/user/loggedInDirection';
     let scolariteUrl = 'http://localhost:5000/api/user/loggedInScolarite';
 
-    const checkAdmin = axios.get(adminUrl);
-    const checkDirection = axios.get(directionUrl);
-    const checkScolarite = axios.get(scolariteUrl);
+    const checkAdmin = await axios.get(adminUrl);
+    const checkDirection = await axios.get(directionUrl);
+    const checkScolarite = await axios.get(scolariteUrl);
 
     axios
       .all([checkAdmin, checkDirection, checkScolarite])
@@ -26,10 +26,12 @@ const AuthContextProvider = (props) => {
           const reponseDirection = responses[1];
           const reponseScolarite = responses[2];
           if (reponseAdmin.data === true) {
+            setAdmin(reponseAdmin.data);
+          } else if (reponseDirection.data === true) {
+            setDirection(reponseDirection.data);
+          } else if (reponseScolarite.data === true) {
+            setScolarite(reponseScolarite.data);
           }
-          setAdmin(reponseAdmin.data);
-          setDirection(reponseDirection.data);
-          setScolarite(reponseScolarite.data);
         })
       )
       .catch((errors) => {

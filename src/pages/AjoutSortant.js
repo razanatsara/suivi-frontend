@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../App.css';
-import { Button, TextField, Grid } from '@mui/material';
+import { Button, TextField, Grid, Checkbox, Typography } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import CardEtudiant from '../composants/CardEtudiant';
 import Select from '@mui/material/Select';
 import axios from 'axios';
-import CardEtudiant from '../composants/CardEtudiant';
 import { useNavigate } from 'react-router-dom';
 
-const Reinscription = () => {
+const AjoutSortant = () => {
   const redirect = useNavigate();
   const [etudiant, setEtudiant] = useState([]);
   const [typeFormation, setTypeFormation] = useState('');
   const [parcours, setParcours] = useState('');
   const [anneEtude, setAnneEtude] = useState('');
-  const [niveau, setNiveau] = useState();
+  const [promotion, setPromotion] = useState();
 
   const updateEtudiant = (student) => {
     const updateStudent = {
@@ -46,11 +46,11 @@ const Reinscription = () => {
     try {
       const reinscriptionData = {
         etudiant,
-        niveau,
+        promotion,
         anneEtude,
       };
       await axios.patch(
-        `http://127.0.0.1:5000/api/etudiant/reinscription`,
+        `http://127.0.0.1:5000/api/etudiant/addSortant`,
         reinscriptionData
       );
       redirect('/home');
@@ -115,6 +115,7 @@ const Reinscription = () => {
             }}
           >
             <MenuItem value={'TIM'}>TIM</MenuItem>
+            <MenuItem value={'RT'}>RT</MenuItem>
             <MenuItem value={'BAT1'}>BAT1</MenuItem>
             <MenuItem value={'BAT2'}>BAT2</MenuItem>
             <MenuItem value={'TP1'}>TP1</MenuItem>
@@ -205,30 +206,19 @@ const Reinscription = () => {
           <Grid item xs={2}></Grid>
           <Grid item xs={8}>
             <Grid container>
-              <Grid item xs={4}>
-                <FormControl
-                  variant="filled"
-                  sx={{
-                    marginRight: '20px',
-                    marginLeft: '20px',
-                    minWidth: 200,
+              <Grid item xs={6}>
+                <TextField
+                  id="outlined-basic"
+                  type={'text'}
+                  label="Promotion"
+                  variant="outlined"
+                  sx={{ width: 320 }}
+                  onChange={(event) => {
+                    setPromotion(event.target.value);
                   }}
-                >
-                  <InputLabel>Niveau</InputLabel>
-                  <Select
-                    label="Age"
-                    onChange={(event) => {
-                      setNiveau(event.target.value);
-                    }}
-                  >
-                    <MenuItem value={'L1'}>L1</MenuItem>
-                    <MenuItem value={'L2'}>L2</MenuItem>
-                    <MenuItem value={'L3'}>L3</MenuItem>
-                    <MenuItem value={'M1'}>M1</MenuItem>
-                    <MenuItem value={'M2'}>M2</MenuItem>
-                  </Select>
-                </FormControl>
+                />
               </Grid>
+
               <Grid item xs={4}>
                 <TextField
                   id="outlined-basic"
@@ -240,20 +230,20 @@ const Reinscription = () => {
                   }}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={2}>
                 <Button
+                  type="submit"
                   variant="contained"
                   style={{ textTransform: 'none' }}
                   sx={{
-                    width: 200,
+                    width: 100,
                     height: 50,
                     backgroundColor: '#0081B4',
-                    padding: 1,
-                    fontSize: 19,
+                    paddingLeft: 3,
+                    paddingRight: 3,
                   }}
-                  type="submit"
                 >
-                  Enregistrer
+                  Ajouter
                 </Button>
               </Grid>
             </Grid>
@@ -265,4 +255,4 @@ const Reinscription = () => {
   );
 };
 
-export default Reinscription;
+export default AjoutSortant;

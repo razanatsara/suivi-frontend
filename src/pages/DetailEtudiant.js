@@ -96,7 +96,6 @@ const DetailEtudiant = () => {
         url: `http://localhost:5000/api/etudiant/${id}`,
       })
         .then((res) => {
-          console.log(res.data);
           setEtudiant(res.data);
         })
         .catch((error) => {

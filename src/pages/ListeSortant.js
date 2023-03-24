@@ -24,9 +24,9 @@ const ListeSortant = () => {
         >
           <InputLabel>Type de formation</InputLabel>
           <Select label="Age">
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            <MenuItem value={'FC'}>FC</MenuItem>
+            <MenuItem value={'FI'}>FI</MenuItem>
+            <MenuItem value={'FOAD'}>FOAD</MenuItem>
           </Select>
         </FormControl>
         <FormControl
@@ -35,9 +35,41 @@ const ListeSortant = () => {
         >
           <InputLabel>Parcours</InputLabel>
           <Select label="Age">
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            <MenuItem value={'TIM'}>TIM</MenuItem>
+            <MenuItem value={'RT'}>RT</MenuItem>
+            <MenuItem value={'BAT1'}>BAT1</MenuItem>
+            <MenuItem value={'BAT2'}>BAT2</MenuItem>
+            <MenuItem value={'TP1'}>TP1</MenuItem>
+            <MenuItem value={'TP2'}>TP2</MenuItem>
+            <MenuItem value={'CCI'}>CCI</MenuItem>
+            <MenuItem value={'PCB'}>PCB</MenuItem>
+            <MenuItem value={'GC1'}>GC1</MenuItem>
+            <MenuItem value={'GC2'}>GC2</MenuItem>
+            <MenuItem value={'UA'}>UA</MenuItem>
+            <MenuItem value={'GIM1'}>GIM1</MenuItem>
+            <MenuItem value={'GIM2'}>GIM2</MenuItem>
+            <MenuItem value={'GIP1'}>GIP1</MenuItem>
+            <MenuItem value={'GSI-MP1'}>GSI-MP1</MenuItem>
+            <MenuItem value={'GSI-MP2'}>GSI-MP2</MenuItem>
+            <MenuItem value={'GSR-ER1'}>GSR-ER1</MenuItem>
+            <MenuItem value={'GSR-ER1'}>GSR-ER1</MenuItem>
+            <MenuItem value={'GSA'}>GSA</MenuItem>
+            <MenuItem value={'GER'}>GER</MenuItem>
+            <MenuItem value={'MAC1'}>MAC1</MenuItem>
+            <MenuItem value={'MAC2'}>MAC2</MenuItem>
+            <MenuItem value={'FC1'}>FC1</MenuItem>
+            <MenuItem value={'FC2'}>FC2</MenuItem>
+            <MenuItem value={'MICE'}>MICE</MenuItem>
+            <MenuItem value={'GTL1'}>GTL1</MenuItem>
+            <MenuItem value={'GTL2'}>GTL2</MenuItem>
+            <MenuItem value={'ELT'}>ELT</MenuItem>
+            <MenuItem value={'GPME1'}>GPME1</MenuItem>
+            <MenuItem value={'GPME2'}>GPME2</MenuItem>
+            <MenuItem value={'MPCE'}>MPCE</MenuItem>
+            <MenuItem value={'CAP1'}>CAP1</MenuItem>
+            <MenuItem value={'CAP2'}>CAP2</MenuItem>
+            <MenuItem value={'LOG1'}>LOG1</MenuItem>
+            <MenuItem value={'LOG2'}>LOG2</MenuItem>
           </Select>
         </FormControl>
         <TextField
